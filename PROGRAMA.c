@@ -8,6 +8,7 @@
 // Estructura para representar el tablero
 typedef struct {
     char board[BOARD_SIZE][BOARD_SIZE];
+    char player_board_1[BOARD_SIZE][BOARD_SIZE];
     pthread_mutex_t mutex;
 } GameBoard;
 
