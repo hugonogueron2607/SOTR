@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <pthread.h>
+#include <stdbool.h>
+#include <ctype.h>
 #include <unistd.h>
 
 #define BOARD_SIZE 5
