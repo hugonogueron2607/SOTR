@@ -87,6 +87,7 @@ void* playerMove(char player_board[BOARD_SIZE][BOARD_SIZE],
         printf("Disparo fuera de los límites. Inténtalo de nuevo.\n");
     }
 }
+}
 
 int main() {
     init_board(player_board_1);
@@ -94,7 +95,7 @@ int main() {
     init_board(game_board_1);
     init_board(game_board_2);
     
-    printf("Bienvendio a Batalla Naval:\n")
+    printf("Bienvendio a Batalla Naval:\n");
 
     pthread_t player1, player2;
     int playerId1 = 1, playerId2 = 2;
