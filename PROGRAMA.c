@@ -53,11 +53,10 @@ void printBoard() {
 }
 
 // Función para realizar la jugada de un jugador
-void* playerMove(char player_board[BOARD_SIZE][BOARD_SIZE],
-                 bool enemy_ships[BOARD_SIZE][BOARD_SIZE],
-                 void* player) {
+void* playerMove(void* player) {
     int* playerId = (int*)player;
-
+    char player_board[BOARD_SIZE][BOARD_SIZE];
+    bool enemy_ships[BOARD_SIZE][BOARD_SIZE];
     while (1) {
         pthread_mutex_lock(&gameBoard.mutex);
         
