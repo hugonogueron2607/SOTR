@@ -8,8 +8,10 @@
 // Estructura para representar el tablero
 typedef struct {
     char board[BOARD_SIZE][BOARD_SIZE];
+    char player_board[BOARD_SIZE][BOARD_SIZE];
     char player_board_1[BOARD_SIZE][BOARD_SIZE];
     char player_board_2[BOARD_SIZE][BOARD_SIZE];
+    char game_board[BOARD_SIZE][BOARD_SIZE];
     char game_board_1[BOARD_SIZE][BOARD_SIZE];
     char game_board_2[BOARD_SIZE][BOARD_SIZE];
     bool enemy_ships[BOARD_SIZE][BOARD_SIZE]={false};
