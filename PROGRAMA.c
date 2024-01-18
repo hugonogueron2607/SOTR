@@ -14,7 +14,7 @@ typedef struct {
 GameBoard gameBoard;
 
 // Función para inicializar el tablero
-void initializeBoard() {
+void init_board() {
     for (int i = 0; i < BOARD_SIZE; i++) {
         for (int j = 0; j < BOARD_SIZE; j++) {
             gameBoard.board[i][j] = '-';
@@ -61,7 +61,7 @@ void* playerMove(void* player) {
 }
 
 int main() {
-    initializeBoard();
+    init_board(player_board_1);
     printBoard();
 
     pthread_t player1, player2;
