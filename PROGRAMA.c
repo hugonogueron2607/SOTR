@@ -8,6 +8,11 @@
 // Estructura para representar el tablero
 typedef struct {
     char board[BOARD_SIZE][BOARD_SIZE];
+    pthread_mutex_t mutex;
+} GameBoard;
+
+GameBoard gameBoard;
+
     char player_board[BOARD_SIZE][BOARD_SIZE];
     char player_board_1[BOARD_SIZE][BOARD_SIZE];
     char player_board_2[BOARD_SIZE][BOARD_SIZE];
@@ -17,10 +22,6 @@ typedef struct {
     bool enemy_ships[BOARD_SIZE][BOARD_SIZE]={false};
     bool enemy_ships_player_1[BOARD_SIZE][BOARD_SIZE]={false};
     bool enemy_ships_player_2[BOARD_SIZE][BOARD_SIZE]={false};
-    pthread_mutex_t mutex;
-} GameBoard;
-
-GameBoard gameBoard;
 
 // Función para inicializar el tablero
 void init_board() {
@@ -49,7 +50,9 @@ void printBoard() {
 }
 
 // Función para realizar la jugada de un jugador
-void* playerMove(void* player) {
+void* playerMove(char player_board[BOARD_SIZE][BOARD_SIZE],
+                 bool enemy_ships[BOARD_SIZE][BOARD_SIZE],
+                 void* player) {
     int* playerId = (int*)player;
 
     while (1) {
@@ -65,16 +68,16 @@ void* playerMove(void* player) {
     y--;                           // Ajustar el índice a partir de 0
 
     if (x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE) {
-        if (gameBoard.enemy_ships[y][x]) {
+        if (enemy_ships[y][x]) {
             printf("¡Impacto! Has alcanzado un barco enemigo en la posición (%c, "
                 "%d)!\n",
                 'A' + x, y + 1);
-            gameBoard.player_board[y][x] =
+            player_board[y][x] =
                 'X'; // Marcamos el impacto en el tablero del jugador
-            gameBoard.enemy_ships[y][x] = false; // "Hundimos" el barco enemigo
+            enemy_ships[y][x] = false; // "Hundimos" el barco enemigo
         } else {
             printf("Disparo al agua en la posición (%c, %d).\n", 'A' + x, y + 1);
-            gameBoard.player_board[y][x] =
+            player_board[y][x] =
                 'O'; // Marcamos el disparo al agua en el tablero del jugador
         }
     } else {
@@ -83,10 +86,10 @@ void* playerMove(void* player) {
 }
 
 int main() {
-    init_board(gameBoard.player_board_1);
-    init_board(gameBoard.player_board_2);
-    init_board(gameBoard.game_board_1);
-    init_board(gameBoard.game_board_2);
+    init_board(player_board_1);
+    init_board(player_board_2);
+    init_board(game_board_1);
+    init_board(game_board_2);
     
     printf("Bienvendio a Batalla Naval:\n")
 
