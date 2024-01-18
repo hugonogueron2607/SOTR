@@ -51,6 +51,36 @@ void printBoard() {
         printf("\n");
     }
 }
+void place_ships(char board[BOARD_SIZE][BOARD_SIZE],
+                 bool enemy_ships[BOARD_SIZE][BOARD_SIZE]) {
+    int num_ships_placed = 0;
+    int num_ships;
+    
+    printf("Ingresa cuantos barcos deseas colocar\n");
+    scanf("%d", &num_ships);
+
+    while (num_ships_placed < num_ships) {
+        char x_char;
+        int y;
+        printf("\nColoca el barco %d\n", num_ships_placed + 1);
+        printf("Ingresa la coordenada (por ejemplo, A5): ");
+        scanf(" %c%d", &x_char, &y);
+
+        int x = toupper(x_char) - 'A'; // Convertir letra a índice
+        y--;                           // Ajustar el índice a partir de 0
+
+        if (x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE &&
+            board[y][x] == '~') {
+            board[y][x] = 'S';
+            num_ships_placed++;
+            enemy_ships[y][x] = true;
+            printf("Barco colocado en la posición (%c, %d)\n", 'A' + x, y + 1);
+        } else {
+            printf("Posición inválida. Inténtalo de nuevo.\n");
+        }
+    }
+}
+
 
 // Función para realizar la jugada de un jugador
 void* playerMove(void* player) {
@@ -102,6 +132,7 @@ int main() {
     pthread_mutex_init(&gameBoard.mutex, NULL);
 
     pthread_create(&player1, NULL, playerMove, &playerId1);
+    pthread_create(&player1, NULL, place_ships, &playerId1);
     pthread_create(&player2, NULL, playerMove, &playerId2);
 
     pthread_join(player1, NULL);
