@@ -62,7 +62,7 @@ void* playerMove(void* player) {
 }
 
 int main() {
-    init_board(player_board_1);
+    init_board(gameBoard.player_board_1);
     printBoard();
 
     pthread_t player1, player2;
