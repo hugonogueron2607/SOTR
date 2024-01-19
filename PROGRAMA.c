@@ -51,8 +51,10 @@ void printBoard() {
         printf("\n");
     }
 }
-void place_ships(char board[BOARD_SIZE][BOARD_SIZE],
-                 bool enemy_ships[BOARD_SIZE][BOARD_SIZE]) {
+void place_ships(void* player) {
+    int* playerId = (int*)player;
+    char board[BOARD_SIZE][BOARD_SIZE];
+    bool enemy_ships[BOARD_SIZE][BOARD_SIZE]; 
     int num_ships_placed = 0;
     int num_ships;
     
