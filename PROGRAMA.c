@@ -133,9 +133,10 @@ int main() {
 
     pthread_mutex_init(&gameBoard.mutex, NULL);
 
-    pthread_create(&player1, NULL, playerMove, &playerId1);
     pthread_create(&player1, NULL, place_ships, &playerId1);
-    pthread_create(&player2, NULL, playerMove, &playerId2);
+    pthread_create(&player2, NULL, place_ships, &playerId2);
+    //pthread_create(&player1, NULL, playerMove, &playerId1);
+    //pthread_create(&player2, NULL, playerMove, &playerId2);
 
     pthread_join(player1, NULL);
     pthread_join(player2, NULL);
