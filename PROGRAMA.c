@@ -152,6 +152,10 @@ void *player_thread(void *arg) {
 
     place_ships(current_player); // Colocar los barcos en el tablero
 
+    // Esperar a que el otro jugador termine de colocar los barcos
+    pthread_mutex_lock(&mutex);
+    pthread_mutex_unlock(&mutex);
+
     while (!is_game_over(current_player, (struct Player *)arg)) {
         play_game(current_player, (struct Player *)arg); // Jugar el juego
     }
@@ -175,8 +179,14 @@ int main() {
     // Inicializar el mutex
     pthread_mutex_init(&mutex, NULL);
 
-    // Crear hilos para cada jugador
+    // Crear hilo para el jugador 1
     pthread_create(&player1_thread, NULL, player_thread, (void *)&player1);
+    
+    // Esperar a que el jugador 1 termine de colocar los barcos
+    pthread_mutex_lock(&mutex);
+    pthread_mutex_unlock(&mutex);
+
+    // Crear hilo para el jugador 2
     pthread_create(&player2_thread, NULL, player_thread, (void *)&player2);
 
     // Esperar a que ambos hilos terminen
