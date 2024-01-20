@@ -48,7 +48,7 @@ void place_ships(struct Player *player) {
     int num_ships_placed = 0;
     int num_ships;
 
-    printf("Jugador %d, ingresa cuantos barcos deseas colocar\n", player->player_number);
+    printf("Jugador %d, ingresa cuántos barcos deseas colocar\n", player->player_number);
     scanf("%d", &num_ships);
 
     while (num_ships_placed < num_ships) {
@@ -147,7 +147,6 @@ int winner(struct Player *player1, struct Player *player2) {
     }
     return 0; // El juego aún no ha terminado
 }
-
 
 // Función para el hilo de un jugador
 void *player_thread(void *arg) {
