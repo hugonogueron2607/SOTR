@@ -29,9 +29,9 @@ void init_board(char board[BOARD_SIZE][BOARD_SIZE]) {
 // Función para imprimir el tablero
 void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
     printf("   ");
-        for (char c = 'A'; c < 'A' + BOARD_SIZE; c++) {
-            printf("%c ", c);
-        }
+    for (char c = 'A'; c < 'A' + BOARD_SIZE; c++) {
+        printf("%c ", c);
+    }
     printf("\n");
 
     for (int i = 0; i < BOARD_SIZE; i++) {
@@ -75,6 +75,8 @@ void place_ships(struct Player *player) {
 
 // Función para jugar el juego
 void play_game(struct Player *current_player, struct Player *other_player) {
+    pthread_mutex_lock(&mutex); // Bloquear mutex antes de entrar en la sección crítica
+
     printf("\nJugador %d, es tu turno!\n", current_player->player_number);
     printf("Tu tablero:\n");
     print_board(current_player->board);
@@ -86,8 +88,6 @@ void play_game(struct Player *current_player, struct Player *other_player) {
 
     int x = toupper(x_char) - 'A'; // Convertir letra a índice
     y--;                           // Ajustar el índice a partir de 0
-
-    pthread_mutex_lock(&mutex); // Bloquear mutex antes de entrar en la sección crítica
 
     if (x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE) {
         if (other_player->enemy_ships[y][x]) {
