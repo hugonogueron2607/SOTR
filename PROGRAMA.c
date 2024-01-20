@@ -15,6 +15,7 @@ struct Player {
     char board[BOARD_SIZE][BOARD_SIZE];
     bool enemy_ships[BOARD_SIZE][BOARD_SIZE];
     int player_number;
+    int num_ships;  // Nuevo campo para almacenar el número de barcos
 };
 
 // Función para inicializar el tablero con agua ('~')
@@ -46,12 +47,11 @@ void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
 // Función para colocar los barcos en el tablero
 void place_ships(struct Player *player) {
     int num_ships_placed = 0;
-    int num_ships;
 
     printf("Jugador %d, ingresa cuántos barcos deseas colocar\n", player->player_number);
-    scanf("%d", &num_ships);
+    scanf("%d", &player->num_ships);
 
-    while (num_ships_placed < num_ships) {
+    while (num_ships_placed < player->num_ships) {
         char x_char;
         int y;
         printf("\nJugador %d, coloca el barco %d\n", player->player_number, num_ships_placed + 1);
@@ -120,8 +120,6 @@ bool is_game_over(struct Player *player1, struct Player *player2) {
             }
         }
     }
-    printf("Al Jugador 1 le falta tirar %d\n", remaining_ships_player_1);
-    printf("Al Jugador 2 le falta tirar %d\n", remaining_ships_player_2);
 
     return (remaining_ships_player_1 == 0 || remaining_ships_player_2 == 0);
 }
