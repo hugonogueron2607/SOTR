@@ -26,6 +26,23 @@ void init_board(char board[BOARD_SIZE][BOARD_SIZE]) {
     }
 }
 
+// Función para imprimir el tablero
+void print_board(char board[BOARD_SIZE][BOARD_SIZE]) {
+    printf("   ");
+        for (char c = 'A'; c < 'A' + BOARD_SIZE; c++) {
+            printf("%c ", c);
+        }
+    printf("\n");
+
+    for (int i = 0; i < BOARD_SIZE; i++) {
+        printf("%2d ", i + 1);
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            printf("%c ", board[i][j]);
+        }
+        printf("\n");
+    }
+}
+
 // Función para colocar los barcos en el tablero
 void place_ships(struct Player *player) {
     int num_ships_placed = 0;
