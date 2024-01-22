@@ -15,7 +15,7 @@ struct Player {
     char board[BOARD_SIZE][BOARD_SIZE];
     bool enemy_ships[BOARD_SIZE][BOARD_SIZE];
     int player_number;
-    int num_ships;  // Nuevo campo para almacenar el número de barcos
+    int num_ships;  
 };
 
 // Función para inicializar el tablero con agua ('~')
@@ -93,11 +93,11 @@ void play_game(struct Player *current_player, struct Player *other_player) {
         if (other_player->enemy_ships[y][x]) {
             printf("¡Impacto! Has alcanzado un barco enemigo en la posición (%c, %d)!\n",
                    'A' + x, y + 1);
-            current_player->board[y][x] = 'X'; // Marcamos el impacto en el tablero del jugador
-            other_player->enemy_ships[y][x] = false; // "Hundimos" el barco enemigo
+            current_player->board[y][x] = 'X'; 
+            other_player->enemy_ships[y][x] = false; 
         } else {
             printf("Disparo al agua en la posición (%c, %d).\n", 'A' + x, y + 1);
-            current_player->board[y][x] = 'O'; // Marcamos el disparo al agua en el tablero del jugador
+            current_player->board[y][x] = 'O'; 
         }
     } else {
         printf("Disparo fuera de los límites. Inténtalo de nuevo.\n");
@@ -182,18 +182,15 @@ int main() {
     // Crear hilo para el jugador 1
     pthread_create(&player1_thread, NULL, player_thread, (void *)&player1);
     
-    // Esperar a que el jugador 1 termine de colocar los barcos
     pthread_mutex_lock(&mutex);
     pthread_mutex_unlock(&mutex);
 
     // Crear hilo para el jugador 2
     pthread_create(&player2_thread, NULL, player_thread, (void *)&player2);
 
-    // Esperar a que ambos hilos terminen
     pthread_join(player1_thread, NULL);
     pthread_join(player2_thread, NULL);
 
-    // Destruir el mutex
     pthread_mutex_destroy(&mutex);
 
     // Determinar al ganador
